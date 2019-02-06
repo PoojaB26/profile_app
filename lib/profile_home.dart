@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:profile_app/profile_detail.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfileHome extends StatelessWidget {
   final _backgroundColor = Color(0xff020021);
@@ -100,7 +100,7 @@ class ProfileHome extends StatelessWidget {
             ),
             SizedBox(height: 20.0,),
             OutlineButton(
-              onPressed: () {},
+              onPressed: () => _launchURL(),
               child: Text(
                 'GO TO WEBSITE',
                 style: TextStyle(color: Colors.white),
@@ -149,4 +149,15 @@ class ProfileHome extends StatelessWidget {
       ),
     );
   }
+
+
+  _launchURL() async {
+    const url = 'https://flutter.io';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
 }
