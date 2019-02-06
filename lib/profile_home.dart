@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile_app/profile_detail.dart';
 
 class ProfileHome extends StatelessWidget {
   final _backgroundColor = Color(0xff020021);
@@ -45,9 +46,12 @@ class ProfileHome extends StatelessWidget {
           children: <Widget>[
             Stack(
               children: <Widget>[
-                CircleAvatar(
-                  maxRadius: 50.0,
-                  backgroundImage: NetworkImage(_imageUrl),
+                Hero(
+                  tag: 'eric',
+                  child: CircleAvatar(
+                    maxRadius: 50.0,
+                    backgroundImage: NetworkImage(_imageUrl),
+                  ),
                 ),
                 Positioned(
                   bottom: 5.0,
@@ -103,7 +107,7 @@ class ProfileHome extends StatelessWidget {
               ),
             ),
             FlatButton(
-              onPressed: () {},
+              onPressed: () => Navigator.of(context).pushNamed('detail') ,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal : 20.0),
                 child: Text('HIRE ME', style: TextStyle(color: Colors.white),),
