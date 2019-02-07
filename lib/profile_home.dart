@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ProfileHome extends StatelessWidget {
+class ProfileHome extends StatefulWidget {
+  @override
+  ProfileHomeState createState() {
+    return ProfileHomeState();
+  }
+}
+
+class ProfileHomeState extends State<ProfileHome> {
   final _backgroundColor = Color(0xff020021);
+
   final _imageUrl =
       'https://pbs.twimg.com/profile_images/947228834121658368/z3AHPKHY_400x400.jpg';
 
   final TextStyle nameTagStyle = TextStyle(
       color: Colors.white, fontSize: 24.0, fontWeight: FontWeight.bold);
+
   final TextStyle roleTagStyle = TextStyle(
       color: Colors.grey, fontWeight: FontWeight.w500, fontSize: 16.0);
 
@@ -24,6 +33,14 @@ class ProfileHome extends StatelessWidget {
     fontWeight: FontWeight.w400,
   );
 
+  bool isFavourite = false;
+
+  void _toggleFavButton(){
+    setState(() {
+      isFavourite = !isFavourite;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +49,9 @@ class ProfileHome extends StatelessWidget {
         backgroundColor: _backgroundColor,
         elevation: 0.0,
         actions: <Widget>[
-          Icon(Icons.favorite),
+          IconButton(
+              onPressed: _toggleFavButton,
+              icon: isFavourite ? Icon(Icons.favorite) : Icon(Icons.favorite_border)),
           SizedBox(width: 20.0,),
           Icon(Icons.more_vert)
         ],
@@ -154,7 +173,6 @@ class ProfileHome extends StatelessWidget {
     );
   }
 
-
   _launchURL() async {
     const url = 'https://flutter.io';
     if (await canLaunch(url)) {
@@ -163,5 +181,4 @@ class ProfileHome extends StatelessWidget {
       throw 'Could not launch $url';
     }
   }
-
 }
