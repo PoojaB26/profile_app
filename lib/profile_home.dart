@@ -12,7 +12,7 @@ class ProfileHome extends StatelessWidget {
       color: Colors.grey, fontWeight: FontWeight.w500, fontSize: 16.0);
 
   final TextStyle descriptionTagStyle =
-      TextStyle(color: Colors.white, fontSize: 18.0);
+  TextStyle(color: Colors.white, fontSize: 18.0);
 
   final projectNameStyle = TextStyle(
     fontSize: 20.0,
@@ -28,7 +28,7 @@ class ProfileHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-      //  title: Text('Profile'),
+        //  title: Text('Profile'),
         backgroundColor: _backgroundColor,
         elevation: 0.0,
         actions: <Widget>[
@@ -42,7 +42,7 @@ class ProfileHome extends StatelessWidget {
         color: _backgroundColor,
         child: Column(
           mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Stack(
               children: <Widget>[
@@ -98,7 +98,9 @@ class ProfileHome extends StatelessWidget {
                 )
               ],
             ),
-            SizedBox(height: 20.0,),
+            SizedBox(height: 5.0,),
+            _getProjectsList(),
+            SizedBox(height: 5.0,),
             OutlineButton(
               onPressed: () => _launchURL(),
               child: Text(
@@ -114,8 +116,7 @@ class ProfileHome extends StatelessWidget {
               ),
               color: Colors.blueAccent,
             ),
-            Divider(),
-            _getProjectsList()
+            SizedBox(height: 20.0,)
           ],
         ),
       ),
@@ -123,29 +124,32 @@ class ProfileHome extends StatelessWidget {
   }
 
   _getProjectsList() {
-    var _cardListItem = Card(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: <Widget>[
-            Text('Project Name', style: projectNameStyle,),
-            Text('Project description', style: projectDescriptionStyle,)],
-        ),
+    return Container(
+      height: 80.0,
+      child: ListView(
+        shrinkWrap: true,
+        physics: BouncingScrollPhysics(),
+        scrollDirection: Axis.horizontal,
+        children: <Widget>[
+          getProjectTag('Dart'),
+          getProjectTag('Flutter'),
+          getProjectTag('Sass'),
+          getProjectTag('Android'),
+          getProjectTag('Angular'),
+          getProjectTag('HTML'),
+          getProjectTag('CSS'),
+          getProjectTag('Material Design'),
+        ],
       ),
     );
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-        child: ListView(
-          children: <Widget>[
-            _cardListItem,
-            _cardListItem,
-            _cardListItem,
-            _cardListItem,
-            _cardListItem,
-            _cardListItem,
-          ],
-        ),
+  }
+
+  Widget getProjectTag(projectName) {
+    return Padding(
+      padding: EdgeInsets.all(4.0),
+      child: Chip(
+        backgroundColor: _backgroundColor.withOpacity(0.8),
+        label: Text('#$projectName', style: TextStyle(color: Colors.white),),
       ),
     );
   }
