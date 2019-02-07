@@ -21,9 +21,12 @@ class ProfileHomeState extends State<ProfileHome> {
 
   get _profileImage => Stack(
     children: <Widget>[
-      CircleAvatar(
-        maxRadius: 50.0,
-        backgroundImage: NetworkImage(_imageUrl),
+      Hero(
+        tag: 'eric',
+        child: CircleAvatar(
+          maxRadius: 50.0,
+          backgroundImage: NetworkImage(_imageUrl),
+        ),
       ),
       Positioned(
         bottom: 0.0,

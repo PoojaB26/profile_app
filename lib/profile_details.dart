@@ -21,9 +21,12 @@ class ProfileDetail extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              CircleAvatar(
-                maxRadius: 80.0,
-                backgroundImage: NetworkImage(_imageUrl),
+              Hero(
+                tag: 'eric',
+                child: CircleAvatar(
+                  maxRadius: 80.0,
+                  backgroundImage: NetworkImage(_imageUrl),
+                ),
               ),
               Text('Hired!', style: TextStyle(
                 fontSize: 25,
