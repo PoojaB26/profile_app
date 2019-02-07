@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:profile_app/profile_home.dart';
-import 'package:profile_app/profile_detail.dart';
+
 
 void main() => runApp(MyApp());
 
@@ -13,10 +12,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: ProfileHome(),
-      routes: {
-        'detail': (context) => ProfileDetail(),
-      },
+      home: Scaffold(),
     );
   }
 }
