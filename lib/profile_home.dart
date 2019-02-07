@@ -86,7 +86,9 @@ class ProfileHomeState extends State<ProfileHome> {
   );
 
   get _hireMeButton => FlatButton(
-    onPressed: () {},
+    onPressed: () {
+      Navigator.of(context).pushNamed('/details');
+    },
     padding: EdgeInsets.symmetric(horizontal: 35.0),
     color: Colors.blue,
     child: Text(
