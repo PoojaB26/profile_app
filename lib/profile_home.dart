@@ -14,171 +14,198 @@ class ProfileHomeState extends State<ProfileHome> {
   final _imageUrl =
       'https://pbs.twimg.com/profile_images/947228834121658368/z3AHPKHY_400x400.jpg';
 
-  final TextStyle nameTagStyle = TextStyle(
-      color: Colors.white, fontSize: 24.0, fontWeight: FontWeight.bold);
-
-  final TextStyle roleTagStyle = TextStyle(
-      color: Colors.grey, fontWeight: FontWeight.w500, fontSize: 16.0);
-
-  final TextStyle descriptionTagStyle =
-  TextStyle(color: Colors.white, fontSize: 18.0);
-
-  final projectNameStyle = TextStyle(
-    fontSize: 20.0,
-    fontWeight: FontWeight.w700,
+  get _devName => Text(
+    'Eric Seidel',
+    style: TextStyle(
+        color: Colors.white, fontSize: 24.0, fontWeight: FontWeight.bold),
   );
 
-  final projectDescriptionStyle = TextStyle(
-    fontSize: 16.0,
-    fontWeight: FontWeight.w400,
-  );
-
-  bool isFavourite = false;
-
-  void _toggleFavButton(){
-    setState(() {
-      isFavourite = !isFavourite;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        //  title: Text('Profile'),
-        backgroundColor: _backgroundColor,
-        elevation: 0.0,
-        actions: <Widget>[
-          IconButton(
-              onPressed: _toggleFavButton,
-              icon: isFavourite ? Icon(Icons.favorite) : Icon(Icons.favorite_border)),
-          SizedBox(width: 20.0,),
-          Icon(Icons.more_vert)
-        ],
+  get _profileImage => Stack(
+    children: <Widget>[
+      Hero(
+        tag: 'eric',
+        child: CircleAvatar(
+          maxRadius: 50.0,
+          backgroundImage: NetworkImage(_imageUrl),
+        ),
       ),
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        color: _backgroundColor,
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Stack(
-              children: <Widget>[
-                Hero(
-                  tag: 'eric',
-                  child: CircleAvatar(
-                    maxRadius: 50.0,
-                    backgroundImage: NetworkImage(_imageUrl),
-                  ),
-                ),
-                Positioned(
-                  bottom: 5.0,
-                  right: 5.0,
-                  child: Container(
-                    height: 25.0,
-                    width: 25.0,
-                    decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                    child: Icon(
-                      Icons.check,
-                      color: Colors.white,
-                      size: 15,
-                    ),
-                  ),
-                )
-              ],
-            ),
-            SizedBox(height: 20.0,),
-            Text(
-              'Eric Seidel',
-              style: nameTagStyle,
-            ),
-            SizedBox(height: 10.0,),
-            Text('ENGINEERING MANAGER', style: roleTagStyle),
-            SizedBox(height: 5.0,),
-            Text('Co-founded the Flutter project', style: descriptionTagStyle),
-            SizedBox(height: 20.0,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Image.asset(
-                  'assets/linkedin.png',
-                  width: 20.0,
-                ),
-                Image.asset(
-                  'assets/skype.png',
-                  width: 20.0,
-                ),
-                Image.asset(
-                  'assets/twitter.png',
-                  width: 20.0,
-                )
-              ],
-            ),
-            SizedBox(height: 5.0,),
-            _getProjectsList(),
-            SizedBox(height: 5.0,),
-            OutlineButton(
-              onPressed: () => _launchURL(),
-              child: Text(
-                'GO TO WEBSITE',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            FlatButton(
-              onPressed: () => Navigator.of(context).pushNamed('detail') ,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal : 20.0),
-                child: Text('HIRE ME', style: TextStyle(color: Colors.white),),
-              ),
-              color: Colors.blueAccent,
-            ),
-            SizedBox(height: 20.0,)
-          ],
+      Positioned(
+        bottom: 0.0,
+        right: 0.0,
+        child: Container(
+          height: 30.0,
+          width: 30.0,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(200.0),
+            color: Colors.blue,
+          ),
+          child: Icon(Icons.check, color: Colors.white, size: 18.0,),
+        ),
+      )
+    ],
+  );
+
+  get _devRole => Text(
+    'ENGINEERING MANAGER',
+    style: TextStyle(
+        color: Colors.grey[400],
+        fontSize: 16.0,
+        fontWeight: FontWeight.w500),
+  );
+
+  get _devDescription => Text(
+    'Co-founded the Flutter Project',
+    style: TextStyle(
+        color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.w500),
+  );
+
+  get _socialLinks => Row(
+    mainAxisAlignment: MainAxisAlignment.spaceAround,
+    children: <Widget>[
+      Image.asset(
+        'assets/linkedin.png',
+        height: 20.0,
+      ),
+      Image.asset(
+        'assets/twitter.png',
+        height: 20.0,
+      ),
+      Image.asset(
+        'assets/skype.png',
+        height: 20.0,
+      )
+    ],
+  );
+
+  get _launchWebsiteButton => OutlineButton(
+    onPressed: () { _launchURL(); },
+    child: Text(
+      'LAUNCH WEBSITE',
+      style: TextStyle(
+        color: Colors.white,
+        fontSize: 14.0,
+      ),
+    ),
+  );
+
+  get _hireMeButton => FlatButton(
+    onPressed: () {
+      Navigator.of(context).pushNamed('/details');
+    },
+    padding: EdgeInsets.symmetric(horizontal: 35.0),
+    color: Colors.blue,
+    child: Text(
+      'HIRE ME',
+      style: TextStyle(
+        color: Colors.white,
+        fontSize: 20.0,
+      ),
+    ),
+  );
+
+  get _devTags => Container(
+    height: 50.0,
+    //color: Colors.white,
+    child: ListView(
+      physics: BouncingScrollPhysics(),
+      scrollDirection: Axis.horizontal,
+      children: <Widget>[
+        getTag('Flutter'),
+        getTag('Dart'),
+        getTag('Android'),
+        getTag('iOS'),
+        getTag('React Native'),
+        getTag('Material Design'),
+      ],
+    ),
+  );
+
+  Padding getTag(tagName) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Chip(
+        backgroundColor: _backgroundColor.withOpacity(0.8),
+        label: Text(
+          '#$tagName',
+          style: TextStyle(color: Colors.white),
         ),
       ),
     );
   }
 
-  _getProjectsList() {
-    return Container(
-      height: 80.0,
-      child: ListView(
-        shrinkWrap: true,
-        physics: BouncingScrollPhysics(),
-        scrollDirection: Axis.horizontal,
-        children: <Widget>[
-          getProjectTag('Dart'),
-          getProjectTag('Flutter'),
-          getProjectTag('Sass'),
-          getProjectTag('Android'),
-          getProjectTag('Angular'),
-          getProjectTag('HTML'),
-          getProjectTag('CSS'),
-          getProjectTag('Material Design'),
-        ],
+
+  bool isFavourite = false;
+
+  _toggleFavButton(){
+    setState(() {
+      isFavourite = !isFavourite;
+    });
+  }
+
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: _backgroundColor,
+      appBar: AppBar(
+          elevation: 0.0,
+          backgroundColor: _backgroundColor,
+          actions: <Widget>[
+            IconButton(
+              onPressed: _toggleFavButton,
+              icon: isFavourite ? Icon(Icons.favorite) : Icon(Icons.favorite_border),
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.more_vert),
+            )
+          ]),
+      body: Container(
+        //color: Colors.red,
+        width: double.maxFinite,
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            _profileImage,
+            SizedBox(
+              height: 10.0,
+            ),
+            _devName,
+            SizedBox(
+              height: 10.0,
+            ),
+            _devRole,
+            _devDescription,
+            SizedBox(
+              height: 20.0,
+            ),
+            _socialLinks,
+            SizedBox(
+              height: 20.0,
+            ),
+            _devTags,
+            SizedBox(
+              height: 20.0,
+            ),
+            _launchWebsiteButton,
+            _hireMeButton
+          ],
+        ),
       ),
     );
   }
+}
 
-  Widget getProjectTag(projectName) {
-    return Padding(
-      padding: EdgeInsets.all(4.0),
-      child: Chip(
-        backgroundColor: _backgroundColor.withOpacity(0.8),
-        label: Text('#$projectName', style: TextStyle(color: Colors.white),),
-      ),
-    );
-  }
-
-  _launchURL() async {
-    const url = 'https://flutter.io';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
+_launchURL() async {
+  const url = 'https://flutter.io';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
   }
 }
