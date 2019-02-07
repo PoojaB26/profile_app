@@ -1,6 +1,13 @@
-# profile_app
+# Profile App
+App built for KIIT e-cell Community Learning 2.0 Flutter workshop
 
-A new Flutter application.
+## Branches
+### [BlankProject]()
+* App is loaded with assets. 
+* `main.dart` has an empty MaterialApp.
+* assets are added to `pubscpec.yaml`.
+
+
 
 ## Getting Started
 
